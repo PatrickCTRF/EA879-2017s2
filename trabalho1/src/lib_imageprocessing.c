@@ -1,9 +1,7 @@
-
 #include <stdlib.h>
 #include <stdio.h>
-
+#include <math.h>
 #include "imageprocessing.h"
-
 #include <FreeImage.h>
 
 /*
@@ -50,6 +48,151 @@ imagem abrir_imagem(char *nome_do_arquivo) {
   return I;
 
 }
+
+
+////////////////////
+
+
+
+
+
+imagem abrir_imagemCOMBRILHO(char *nome_do_arquivo, float brilho) {
+  FIBITMAP *bitmapIn;
+  int x, y;
+  RGBQUAD color;
+  imagem I;
+
+
+  float VALORBRILHO = 0.0;
+
+  bitmapIn = FreeImage_Load(FIF_JPEG, nome_do_arquivo, 0);
+
+  if (bitmapIn == 0) {
+    printf("Erro! Nao achei arquivo - %s\n", nome_do_arquivo);
+  } else {
+    printf("Arquivo lido corretamente!\n");
+   }
+
+  x = FreeImage_GetWidth(bitmapIn);
+  y = FreeImage_GetHeight(bitmapIn);
+
+  I.width = x;
+  I.height = y;
+  I.r = malloc(sizeof(float) * x * y);
+  I.g = malloc(sizeof(float) * x * y);
+  I.b = malloc(sizeof(float) * x * y);
+
+   for (int i=0; i<x; i++) {
+     for (int j=0; j <y; j++) {
+      int idx;
+      FreeImage_GetPixelColor(bitmapIn, i, j, &color);
+
+      
+
+      idx = i + (j*x);
+
+	VALORBRILHO = color.rgbRed * brilho;
+	if(VALORBRILHO <= 255.0)
+	{
+		I.r[idx] = VALORBRILHO;
+	}
+	else I.r[idx] = 255.0;
+
+      
+	VALORBRILHO = color.rgbGreen * brilho;
+	if(VALORBRILHO <= 255.0)
+	{
+		I.g[idx] = VALORBRILHO;
+	}
+	else I.g[idx] = 255.0;
+
+	VALORBRILHO = color.rgbBlue * brilho;
+	if(VALORBRILHO <= 255.0)
+	{
+		I.b[idx] = VALORBRILHO;
+	}
+	else I.b[idx] = 255.0;
+
+
+
+
+
+   }
+   }
+  return I;
+
+}
+
+///////////////////////////////////////
+
+
+imagem valor_maximo(char *nome_do_arquivo) {
+  
+  FIBITMAP *bitmapIn;
+  int x, y;
+  RGBQUAD color;
+  imagem I;
+
+
+	float MAXPIX = 0;
+
+	float temp = 0;	
+
+
+  bitmapIn = FreeImage_Load(FIF_JPEG, nome_do_arquivo, 0);
+
+  if (bitmapIn == 0) {
+    printf("Erro! Nao achei arquivo - %s\n", nome_do_arquivo);
+  } else {
+    printf("Arquivo lido corretamente!\n");
+   }
+
+  x = FreeImage_GetWidth(bitmapIn);
+  y = FreeImage_GetHeight(bitmapIn);
+
+  I.width = x;
+  I.height = y;
+  I.r = malloc(sizeof(float) * x * y);
+  I.g = malloc(sizeof(float) * x * y);
+  I.b = malloc(sizeof(float) * x * y);
+
+   for (int i=0; i<x; i++) {
+     for (int j=0; j <y; j++) {
+      int idx;
+      FreeImage_GetPixelColor(bitmapIn, i, j, &color);
+
+      
+
+      idx = i + (j*x);
+
+      
+	temp = 	sqrt( pow(color.rgbRed,2.0) + pow(color.rgbGreen,2.0) + pow(color.rgbBlue,2.0));
+
+		
+	MAXPIX = (temp > MAXPIX) ? temp : MAXPIX;
+
+
+   }
+   }
+  
+	printf("Valor Máximo = %f \n", MAXPIX);
+
+
+	return I;
+
+}
+
+
+
+
+
+//////////////////////////////////////////
+
+
+
+
+
+
 
 void liberar_imagem(imagem *I) {
   free(I->r);

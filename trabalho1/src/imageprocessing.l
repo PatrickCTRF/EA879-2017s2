@@ -2,6 +2,9 @@
 %{
 #include <stdlib.h>
 #include <string.h>
+
+#include <math.h>
+
 void yyerror(char *);
 
 #include "y.tab.h"
@@ -31,6 +34,28 @@ void yyerror(char *);
 [=]     {
           return IGUAL;
         }
+
+
+
+
+[/]	{ return DIVIDIDO;}
+
+[*]	{ return VEZES;}
+
+[0-9]+(\.[0-9]+)?$ { 
+
+		yylval.valor = strtof(yytext, NULL);
+		return VALOR;
+}
+
+[\[] { return COLCHETEABERTO;}
+
+[\]] { return COLCHETEFECHADO;}
+
+
+
+
+
 
 \n   {
          return EOL;
