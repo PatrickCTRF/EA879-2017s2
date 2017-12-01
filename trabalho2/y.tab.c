@@ -461,7 +461,7 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    25,    25,    26,    29,    30,    40,    89,   101
+       0,    25,    25,    26,    29,    30,    40,    89,   127
 };
 #endif
 
@@ -1300,19 +1300,45 @@ yyreduce:
 #line 89 "./src/imageprocessing.y" /* yacc.c:1646  */
     {
 
+			
+			printf("NÚMERO =  %f\n", (yyvsp[0].valor));
+			//printf("Li imagem %d por %d\n", I_threads.width, I_threads.height);
+			char str[80];
+
 			printf("Copiando %s para %s\n", (yyvsp[-2].strval), (yyvsp[-4].strval));
-			imagem I = abrir_imagemCOMBRILHO_Colunas((yyvsp[-2].strval), (1/(yyvsp[0].valor)));
-			printf("NÚMERO =  %f\n", (1/(yyvsp[0].valor)));
-			printf("Li imagem %d por %d\n", I.width, I.height);
-			salvar_imagem((yyvsp[-4].strval), &I);
-			liberar_imagem(&I);
+			imagem I_processos = abrir_imagemCOMBRILHO_Processos((yyvsp[-2].strval), 1/(yyvsp[0].valor));
+			strcpy(str, "_Processos_");
+			strcat(str, (yyvsp[-4].strval));	
+			salvar_imagem(str, &I_processos);
+			liberar_imagem(&I_processos);
+			
+			
+			imagem I_threads = abrir_imagemCOMBRILHO_Threads((yyvsp[-2].strval), 1/(yyvsp[0].valor));
+			strcpy(str, "_Thread_");
+			strcat(str, (yyvsp[-4].strval));
+			salvar_imagem(str, &I_threads);
+			liberar_imagem(&I_threads);
+			
+			
+			imagem I_colunas = abrir_imagemCOMBRILHO_Colunas((yyvsp[-2].strval), 1/(yyvsp[0].valor));
+			strcpy(str, "_Colunas_");
+			strcat(str, (yyvsp[-4].strval));
+			salvar_imagem(str, &I_colunas);
+			liberar_imagem(&I_colunas);
+			
+			
+			imagem I_linhas = abrir_imagemCOMBRILHO_Linhas((yyvsp[-2].strval), 1/(yyvsp[0].valor));
+			strcpy(str, "_Linhas_");
+			strcat(str, (yyvsp[-4].strval));
+			salvar_imagem(str, &I_linhas);
+			liberar_imagem(&I_linhas);
 		
 					}
-#line 1312 "y.tab.c" /* yacc.c:1646  */
+#line 1338 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 101 "./src/imageprocessing.y" /* yacc.c:1646  */
+#line 127 "./src/imageprocessing.y" /* yacc.c:1646  */
     {
 
 
@@ -1323,11 +1349,11 @@ yyreduce:
 
 
 						}
-#line 1327 "y.tab.c" /* yacc.c:1646  */
+#line 1353 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1331 "y.tab.c" /* yacc.c:1646  */
+#line 1357 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1555,7 +1581,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 117 "./src/imageprocessing.y" /* yacc.c:1906  */
+#line 143 "./src/imageprocessing.y" /* yacc.c:1906  */
 
 
 void yyerror(char *s) {

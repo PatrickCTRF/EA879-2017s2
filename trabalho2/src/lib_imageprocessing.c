@@ -370,7 +370,7 @@ imagem abrir_imagemCOMBRILHO_Linhas(char *nome_do_arquivo, float brilho){
     
   timersub(&rt1, &rt0, &drt);  
   tempo = drt.tv_sec + 0.000001*drt.tv_usec;
-  printf("\nTEMPO Por Colunas: %f segundos\n\n", tempo);
+  printf("\nTEMPO Por Linhas: %f segundos\n\n", tempo);
   
 //======POR-Linhas-FIM===================================================================
 
@@ -445,7 +445,7 @@ imagem abrir_imagemCOMBRILHO_Colunas(char *nome_do_arquivo, float brilho){
     
   timersub(&rt1, &rt0, &drt);  
   tempo = drt.tv_sec + 0.000001*drt.tv_usec;
-  printf("\nTEMPO Por Linhas: %f segundos\n\n", tempo);
+  printf("\nTEMPO Por Colunas: %f segundos\n\n", tempo);
   
 //======POR-Colunas-FIM===================================================================
   
